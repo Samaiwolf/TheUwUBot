@@ -1,13 +1,13 @@
 {
   "name": "uwumusic",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Music UwU",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "SamaiWolf",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3"
