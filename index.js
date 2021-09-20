@@ -1,6 +1,16 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
+const fs = require("fs");
+let{readdirSync} = require("fs");
+
+client.commands = new Discord.Collection();
+const commandFiles = fs.readdirSync("./comandos").filter(file => file.endsWith(".js"));
+
+for(const file of commandFiles) {
+  const command = require("./comandos/${file}");
+  client.commands.set(command.name, command);
+}
 
 client.on("ready", () => {
     console.log("Estoy lista Sempai UwU");
@@ -26,14 +36,16 @@ client.on("message", (message) => {
   
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-  
-    if(command === 'ping'){
-      message.channel.send('pong!')
-    }
     /*
     if (message.content.startsWith("hola")) {
          message.channel.send("Holi UwU");
     }
     */
+
+    let cmd = client.commands.find((c) => c.name === command || c.alias && c.alias.incluides(command));
+    if(cmd){
+      cmd.execute(client, message, args)
+    }
+
   })
 client.login(config.TOKEN);
